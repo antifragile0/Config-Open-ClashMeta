@@ -33,10 +33,10 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 
 ## Documentation
 
-- For MihomoTProxy :
+- For Nikki (Mihomo) :
 
 ```bash
-bash -c "$(wget -qO - 'https://github.com/rizkikotet-dev/OpenWrt-mihomo-Mod/raw/refs/heads/main/autoscript.sh')"
+bash -c "$(curl -fsSL 'https://github.com/rizkikotet-dev/OpenWrt-nikki-Mod/raw/refs/heads/main/install.sh')"
 ```
 
 ### Overviews
