@@ -1,0 +1,155 @@
+rule-providers:
+  Direct:
+    type: file
+    behavior: classical
+    path: "./providers/rule/direct.yaml"
+  Reject:
+    type: file
+    behavior: classical
+    path: "./providers/rule/reject.yaml"
+  Streaming:
+    type: file
+    behavior: classical
+    path: "./providers/rule/streaming.yaml"
+  Games:
+    type: file
+    behavior: classical
+    path: "./providers/rule/games.yaml"
+  UDP:
+    type: file
+    behavior: classical
+    path: "./providers/rule/UDP.yaml"
+  Sosmed:
+    type: file
+    behavior: classical
+    path: "./providers/rule/sosmed.yaml"
+  Ewallet:
+    type: file
+    behavior: classical
+    path: "./providers/rule/ewallet.yaml"
+  Pilih:
+    type: file
+    behavior: classical
+    path: "./providers/rule/pilih.yaml"
+proxy-providers:
+  ID:
+    type: file
+    path: "./providers/proxy/akun-id.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+  SG:
+    type: file
+    path: "./providers/proxy/akun-sg.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+  WORLD:
+    type: file
+    path: "./providers/proxy/akun-world.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+proxy-groups:
+  - name: PILIH
+    type: select
+    disable-udp: false
+    use:
+      - ID
+      - SG
+      - WORLD
+  - name: UDP-Traffic
+    type: select
+    disable-udp: false
+    proxies:
+      - Failover
+    use:
+      - ID
+      - SG
+  - name: TCP-Traffic
+    type: select
+    disable-udp: false
+    proxies:
+      - Ping-Alive
+      - LoadBalancing
+      - Failover
+      - PILIH
+  - name: Indo-Traffic
+    type: url-test
+    disable-udp: false
+    use:
+      - ID
+    proxies:
+      - Failover
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: Failover
+    type: fallback
+    disable-udp: false
+    use:
+      - ID
+      - SG
+      - WORLD
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: Ping-Alive
+    type: url-test
+    disable-udp: false
+    use:
+      - ID
+      - SG
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: LoadBalancing
+    type: load-balance
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - ID
+      - SG
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+rules:
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+#  - AND,((NETWORK,udp),(OR,((DST-PORT,443),(GEOSITE,youtube)))),REJECT
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,UDP,UDP-Traffic
+  - RULE-SET,Games,UDP-Traffic
+#  - RULE-SET,Pilih,PILIH
+  - RULE-SET,Sosmed,Indo-Traffic
+  - RULE-SET,Ewallet,Indo-Traffic
+  - RULE-SET,Streaming,Indo-Traffic
+  - RULE-SET,Reject,REJECT
+  - MATCH,GLOBAL
+
+dns:
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  proxy-server-nameserver:
+    - 112.215.198.248
+    - 112.215.198.254
+    - 112.215.203.246
+    - 112.215.203.247
+    - 112.215.203.248
+    - 112.215.203.254
+#    - 192.168.158.30 #DNS-TELKOMSEL
+#    - 192.168.112.128 #DNS-TELKOMSEL
+#    - 192.168.130.30 #DNS-TELKOMSEL
+  fallback:
+    - 8.8.8.8
+    - 8.8.4.4
+    - 1.1.1.1
+    - 1.0.0.1
+    - tls://dns.google
+    - https://dns.google/dns-query
