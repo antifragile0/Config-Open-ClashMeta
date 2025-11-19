@@ -30,27 +30,30 @@ jobs:
           rm -fr GeoIP.dat
           rm -fr GeoSite.dat
           echo "Downloading Country.mmdb ..."
-          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/country.mmdb -O Country.mmdb
+          wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/country.mmdb -O Country.mmdb
           echo "Downloading GeoIp.dat ..."
-          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geoip.dat -O GeoIP.dat
+          wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/geoip.dat -O GeoIP.dat
           echo "Downloading GeoSite.dat ..."
-          wget https://github.com/rtaserver/meta-rules-dat/releases/download/latest/geosite.dat -O GeoSite.dat
+          wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/geosite.dat -O GeoSite.dat
           chmod +x Country.mmdb
           chmod +x GeoIP.dat
           chmod +x GeoSite.dat
 
-          chmod +x ./config/config-rule-wrt.yaml
-          chmod +x ./config/config-simple-wrt.yaml
+          chmod +x ./config/Antfrgl-GeoRule.yaml
+          chmod +x ./config/Antfrgl-RuleSET.yaml
 
-          chmod +x ./proxy_provider/pp-sg.yaml
-          chmod +x ./proxy_provider/pp-direct.yaml
-          chmod +x ./proxy_provider/pp-gaming.yaml
-          chmod +x ./proxy_provider/pp-id.yaml
+          chmod +x ./proxy_provider/akun-id.yaml
+          chmod +x ./proxy_provider/akun-sg.yaml
+          chmod +x ./proxy_provider/akun-world.yaml
 
-          chmod +x ./rule_provider/rp-direct.yaml
-          chmod +x ./rule_provider/rp-indo.yaml
-          chmod +x ./rule_provider/rp-reject.yaml
-          chmod +x ./rule_provider/rp-umum.yaml
+          chmod +x ./rule_provider/direct.yaml
+          chmod +x ./rule_provider/ewallet.yaml
+          chmod +x ./rule_provider/games.yaml
+          chmod +x ./rule_provider/pilih.yaml
+          chmod +x ./rule_provider/reject.yaml
+          chmod +x ./rule_provider/sosmed.yaml
+          chmod +x ./rule_provider/streaming.yaml
+          chmod +x ./rule_provider/UDP.yaml
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -81,7 +84,7 @@ jobs:
           body: |
             ### Update Config ClashMeta - RTA SERVER
             Build date: ${{ env.BUILDTIME }}
-            See [here](https://github.com/rtaserver/meta-rules-dat) for more detail feature and other information.
+            See [here](https://github.com/antifragile0/GeoSite-WRT) for more detail feature and other information.
             - Auto Update GeoIP
             - Auto Update GeoSite
 
