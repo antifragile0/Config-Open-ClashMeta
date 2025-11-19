@@ -1,0 +1,180 @@
+---
+rule-providers:
+  Direct:
+    type: file
+    behavior: classical
+    path: "./rule_provider/direct.yaml"
+  Pilih:
+    type: file
+    behavior: classical
+    path: "./rule_provider/pilih.yaml"
+  UDP:
+    type: file
+    behavior: classical
+    path: "./rule_provider/UDP.yaml"
+proxy-providers:
+  ID:
+    type: file
+    path: "./proxy_provider/akun-id.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+  SG:
+    type: file
+    path: "./proxy_provider/akun-sg.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+  WORLD:
+    type: file
+    path: "./proxy_provider/akun-world.yaml"
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 120
+proxy-groups:
+  - name: PILIH
+    type: select
+    disable-udp: false
+    use:
+      - ID
+      - SG
+      - WORLD
+  - name: UDP-Traffic
+    type: select
+    disable-udp: false
+    proxies:
+      - Failover
+    use:
+      - ID
+      - SG
+  - name: TCP-Traffic
+    type: select
+    disable-udp: false
+    proxies:
+      - Ping-Alive
+      - LoadBalancing
+      - Failover
+      - PILIH
+  - name: Indo-Traffic
+    type: url-test
+    disable-udp: false
+    use:
+      - ID
+    proxies:
+      - Failover
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: Failover
+    type: fallback
+    disable-udp: false
+    use:
+      - ID
+      - SG
+      - WORLD
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: Ping-Alive
+    type: url-test
+    disable-udp: false
+    use:
+      - ID
+      - SG
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+  - name: LoadBalancing
+    type: load-balance
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - ID
+      - SG
+    url: http://www.gstatic.com/generate_204
+    interval: '120'
+    tolerance: '10'
+rules:
+  - IP-CIDR,198.18.0.1/16,REJECT,no-resolve
+#  - AND,((GEOSITE,rule-ads),(NOT,((DOMAIN-SUFFIX,googlesyndication.com)))),REJECT
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,UDP,UDP-Traffic
+#  - RULE-SET,Pilih,PILIH
+  - GEOSITE,bank-id,Indo-Traffic
+  - GEOSITE,rule-indo,Indo-Traffic
+  - GEOSITE,rule-sosmed,Indo-Traffic
+  - GEOSITE,rule-streaming,Indo-Traffic
+  - GEOSITE,rule-gaming,UDP-Traffic
+  - GEOSITE,rule-speedtest,PILIH
+  - GEOSITE,urltest,Ping-Alive
+  - MATCH,GLOBAL
+
+dns:
+  nameserver:
+    - 8.8.8.8
+    - 8.8.4.4
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  proxy-server-nameserver:
+    - 112.215.198.248
+    - 112.215.198.254
+    - 112.215.203.246
+    - 112.215.203.247
+    - 112.215.203.248
+    - 112.215.203.254
+#    - 192.168.158.30 #DNS-TELKOMSEL
+#    - 192.168.112.128 #DNS-TELKOMSEL
+#    - 192.168.130.30 #DNS-TELKOMSEL
+  fallback:
+    - 8.8.8.8
+    - 8.8.4.4
+    - 1.1.1.1
+    - 1.0.0.1
+    - tls://dns.google
+    - https://dns.google/dns-query
+  enable: true
+  ipv6: false
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7874
+  respect-rules: true
+keep-alive-idle: 1
+keep-alive-interval: 30
+ipv6: false
+tcp-concurrent: true
+unified-delay: true
+tun:
+  enable: true
+  stack: system
+  device: utun
+  dns-hijack:
+  - 127.0.0.1:53
+  endpoint-independent-nat: true
+  auto-route: false
+  auto-detect-interface: false
+  auto-redirect: false
+  strict-route: false
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+redir-port: 7892
+tproxy-port: 7895
+port: 7890
+socks-port: 7891
+mixed-port: 7893
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+secret: "antfrgl"
+bind-address: "*"
+external-ui: "/usr/share/openclash/ui"
+external-ui-name: zashboard
+geodata-loader: memconservative
