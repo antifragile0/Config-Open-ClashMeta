@@ -78,7 +78,7 @@ jobs:
           overwrite: true
           file: ./*.tar.gz
           body: |
-            ### Update Config ClashMeta - RTA SERVER
+            ### Update Config OpenClashMeta - @antfrgl | Script by rizkikotet-dev
             Build date: ${{ env.BUILDTIME }}
             See [here](https://github.com/antifragile0/GeoSite-WRT) for more detail feature and other information.
             - Auto Update GeoSite
