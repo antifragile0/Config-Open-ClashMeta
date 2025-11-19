@@ -4,11 +4,11 @@
 </h1>
 
 <p align="center">
-  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/releases">
-    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/rizkikotet-dev/Config-Open-ClashMeta?label=Latest%20Release&labelColor=white">
+  <a href="https://github.com/antifragile0/Config-Open-ClashMeta/releases">
+    <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/antifragile0/Config-Open-ClashMeta?label=Latest%20Release&labelColor=white">
   </a>
-  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/blob/main/LICENSE">
-   <img alt="GitHub" src="https://img.shields.io/github/license/rizkikotet-dev/Config-Open-ClashMeta">
+  <a href="https://github.com/antifragile0/Config-Open-ClashMeta/blob/main/LICENSE">
+   <img alt="GitHub" src="https://img.shields.io/github/license/antifragile0/Config-Open-ClashMeta">
   </a>
 </p>
 
@@ -20,13 +20,12 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 - Anti Leaked
 - Pisah Trafik Gaming Online
 - Pisah Trafik Indo Only
-- Adblock
-- Support +2 Modem
+- Small Adblock
 
 <p>
 
 <p align="center">
-  <a href="https://github.com/rizkikotet-dev/Config-Open-ClashMeta/releases">
+  <a href="https://github.com/antifragile0/Config-Open-ClashMeta/releases">
     <button type="button" name="myButton">Download Config</button>
   </a>
 </p>
@@ -36,7 +35,7 @@ Simpel Config Pisah Traffic OpenClash Meta Version
 - For Nikki (Mihomo) :
 
 ```bash
-bash -c "$(curl -fsSL 'https://github.com/rizkikotet-dev/OpenWrt-nikki-Mod/raw/refs/heads/main/install.sh')"
+bash -c "$(curl -fsSL 'https://github.com/antifragile0/nikki-backup-restore/raw/refs/heads/main/nikkibackup.sh')"
 ```
 
 ### Overviews
@@ -71,7 +70,7 @@ bash -c "$(curl -fsSL 'https://github.com/rizkikotet-dev/OpenWrt-nikki-Mod/raw/r
 ![img1](image/DNS-SET.png)
 
 - Setting Global Proxy
-  - `Traffic-Browsing`
+  - `Ping-Alive`
 
 ![img6](image/Yacd.png)
 
