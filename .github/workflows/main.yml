@@ -27,16 +27,12 @@ jobs:
         working-directory: ./config
         run: |
           rm -fr Country.mmdb
-          rm -fr GeoIP.dat
           rm -fr GeoSite.dat
           echo "Downloading Country.mmdb ..."
           wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/country.mmdb -O Country.mmdb
-          echo "Downloading GeoIp.dat ..."
-          wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/geoip.dat -O GeoIP.dat
           echo "Downloading GeoSite.dat ..."
           wget https://github.com/antifragile0/GeoSite-WRT/releases/download/latest/geosite.dat -O GeoSite.dat
           chmod +x Country.mmdb
-          chmod +x GeoIP.dat
           chmod +x GeoSite.dat
 
           chmod +x ./config/Antfrgl-GeoRule.yaml
@@ -85,7 +81,6 @@ jobs:
             ### Update Config ClashMeta - RTA SERVER
             Build date: ${{ env.BUILDTIME }}
             See [here](https://github.com/antifragile0/GeoSite-WRT) for more detail feature and other information.
-            - Auto Update GeoIP
             - Auto Update GeoSite
 
       - name: Delete workflow runs
