@@ -1,0 +1,32 @@
+# CONTOH FORMAT : https://blog.vpngame.com/openwrt/kumpulan-daftar-format-akun-untuk-openclash/
+proxies:
+- name: 🇸🇬 VlessSG
+  server: bug.com
+  port: 443
+  type: vless
+  uuid: eeeeeee3-eeee-4eee-aeee-eeeeeeeeeee5
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  servername: bug.com
+  network: ws
+  ws-opts:
+    path: /vless
+    headers:
+      Host: bug.com
+  udp: true
+
+- name: 🇸🇬 TrojanSG
+  server: bug.com
+  port: 443
+  type: trojan
+  password: eeeeeee3-eeee-4eee-aeee-eeeeeeeeeee5
+  skip-cert-verify: true
+  sni: bug.com
+  network: ws
+  ws-opts:
+    path: /trojan
+    headers:
+      Host: bug.com
+  udp: true
+
